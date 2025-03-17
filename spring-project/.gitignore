@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### JDK ###
-/Employee-Manager/spring-project/src/main/java/com/loganhenig/spring_project/OpenJDK-23
+spring-project/src/main/java/com/loganhenig/spring_project/OpenJDK-23/
