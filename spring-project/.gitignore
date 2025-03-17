@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### JDK ###
+spring-project/src/main/java/com/loganhenig/spring_project/OpenJDK-23/
