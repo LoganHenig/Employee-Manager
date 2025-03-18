@@ -2,6 +2,7 @@ package com.loganhenig.spring_project.model;
 
 import com.loganhenig.spring_project.services.DepartmentService;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,13 +16,21 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "employees")
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @NotBlank(message="Name is required")
@@ -30,6 +39,7 @@ public class Employee {
 
     @NotBlank(message="Email is required")
     @Email(message="Invalid email format")
+    @Column(unique=true, nullable=false)
     private String email;
 
     @NotNull(message="Salary is required")
@@ -37,43 +47,9 @@ public class Employee {
     @DecimalMax(value = "500000.00", message = "Salary must be less than 500,000")
     private Double salary;
 
-    @NotNull(message="Department ID is required")
-    @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
-
-    public Employee(){}
-
-    public Employee(String name, String email, Double salary, Department department) {
-        this.name = name;
-        this.email = email;
-        this.salary = salary;
-        this.department = department;
-    }
-
-    public String getName(){
-        return name;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
-    public String getEmail(){
-        return email;
-    }
-    public void setEmail(String email){
-        this.email = email;
-    } 
-    public Double getSalary(){
-        return salary;
-    }
-    public void setSalary(Double salary){
-        this.salary = salary;
-    }
-    public Department getDepartmentId(){
-        return department;
-    }
-    public void setDepartmentId(Department depId){
-        this.department = depId;
-    }
+    // @NotNull(message="Department ID is required")
+    // @ManyToOne
+    // @JoinColumn(name = "department_id")
+    // private Department department;
     
 }

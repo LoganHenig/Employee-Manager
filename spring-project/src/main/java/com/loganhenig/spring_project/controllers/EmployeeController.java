@@ -11,6 +11,7 @@ import com.loganhenig.spring_project.SpringProjectApplication;
 import com.loganhenig.spring_project.model.Employee;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,16 +31,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Validated
 public class EmployeeController {
 
+    private final DepartmentController departmentController;
+
     @Autowired 
     private EmployeeService employeeService;
+
+    EmployeeController(DepartmentController departmentController) {
+        this.departmentController = departmentController;
+    }
     
     @GetMapping("/")
     public List<Employee> getAllEmployees(){
         return employeeService.getAllEmployees();
     }
     @PostMapping("/")
-    public ResponseEntity<Employee> createEmployee(@Valid @RequestBody Employee emp) {
-        Employee savedEmployee = employeeService.createEmployee(emp);
-        return ResponseEntity.ok(savedEmployee);
+    public ResponseEntity<?> createEmployee(@Valid @RequestBody Employee emp) {
+        System.out.println(emp);
+        try{
+            return ResponseEntity.ok(employeeService.createEmployee(emp));
+        }
+        catch(IllegalArgumentException e){
+                return ResponseEntity.badRequest().body("Email already exists");
+        }
     }   
 }

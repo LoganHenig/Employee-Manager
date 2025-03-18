@@ -37,8 +37,13 @@ public class DepartmentController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Department> createDepartment(@Valid @RequestBody Department department) {    
-        return ResponseEntity.ok(departmentService.createDepartment(department));
+    public ResponseEntity<?> createDepartment(@Valid @RequestBody Department department) {    
+        try{
+            return ResponseEntity.ok(departmentService.createDepartment(department));
+        }
+        catch(IllegalArgumentException err){
+            return ResponseEntity.badRequest().body("Department already exists.");
+        }
     }
     
     

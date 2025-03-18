@@ -19,6 +19,11 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
     public Employee createEmployee(@RequestBody Employee emp) {
+        if(employeeRepository.existsByEmail(emp.getEmail())){
+            System.out.println("email already exits");
+            throw new IllegalArgumentException("Email already exists.");
+        }
+        System.out.println("saving emp now");
         return employeeRepository.save(emp);
     }
 
